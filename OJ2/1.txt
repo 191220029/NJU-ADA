@@ -1,0 +1,109 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+
+
+//const int N = 100000;
+int *a;
+int k, n;
+
+void s_check() {
+	for (int i = 0; i < n; i++)
+		cout << a[i] << ' ';
+	cout << endl;
+}
+
+int Partition(int p, int r) {
+	int pivot = a[r];
+	int i = p - 1;
+	for (int j = p; j < r; j++) {
+		if (a[j] < pivot) {
+			i++;
+			swap(a[i], a[j]);
+		}
+	}
+	swap(a[i + 1], a[r]);
+	return i + 1;
+}
+
+int Select_Elinear(int p, int r, int k) { //return index of kth ele in a[]
+	if (p == r)
+		return p;
+	int q = Partition(p, r);
+	int x = q - p + 1;
+	if (k == x)
+		return q;
+	else if (k < x) {
+		return Select_Elinear(p, q - 1, k);
+	}
+	else
+		return Select_Elinear(q + 1, r, k - x);
+}
+
+void check() {
+	cout << endl;
+	sort(a, a + n);
+	for (int i = 0; i < n; i++)
+		cout << a[i] << ' ';
+	cout << endl;
+}
+
+int main() {
+	cin >> k >> n;
+	a = new int[n + 1];
+	for (int i = 0; i < n; i++)
+		cin >> a[i];
+	int mid = (n + 1 >> 1) - 1;
+	//cout << "mid: " << mid << endl;
+	//find (n/2 - k)th and (n/2 + k)th ele's index in a[]
+	Select_Elinear(0, n - 1, mid + 1);
+
+	//cout << "after select: ";
+	//s_check();
+
+	int cnt = 1;
+	while (cnt <= k) {
+		int u = 0, v = mid + 1;
+		int maxl = -100000;
+		for (int i = 0; i <= mid - cnt; i++) {
+			if (maxl < a[i])
+				maxl = a[i], u = i;
+		}
+
+		swap(a[mid - cnt], a[u]);
+		//cout << "swapped: " << mid - cnt << ' ' << u << endl;
+		//s_check();
+
+		int minr = 100000;
+		for (int j = mid + cnt; j < n; j++) {
+			if (minr > a[j])
+				minr = a[j], v = j;
+		}
+
+		swap(a[mid + cnt], a[v]);
+		//cout << "swapped: " << mid + cnt << ' ' << v << endl;
+		//s_check();
+		cnt++;
+	}
+
+	//s_check();
+
+	//sort(a + left, a + right); //O(klogk)
+	sort(a + mid - k, a + mid + k);
+	for (int i = mid - k; i <= mid + k; i++)
+		cout << a[i] << ' ';
+	//check();
+	delete[]a;
+	return 0;
+}
+
+/*
+2 10
+7 2 5 7 2 10 7 7 13 15
+2 11
+7 2 5 7 2 10 7 7 13 15 4
+
+2 10
+1 2 3 4 5 6 7 8 9 10
+*/

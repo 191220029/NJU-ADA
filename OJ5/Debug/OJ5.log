@@ -1,0 +1,12 @@
+﻿  main.cpp
+E:\本科\算法设计与分析\OJ5\main.cpp(45,21): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(52,23): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(81,20): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(115,20): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(116,21): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(161,21): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(163,22): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(166,24): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(219,22): warning C4018: “<”: 有符号/无符号不匹配
+E:\本科\算法设计与分析\OJ5\main.cpp(227,20): warning C4018: “<”: 有符号/无符号不匹配
+  OJ5.vcxproj -> E:\本科\算法设计与分析\OJ5\Debug\OJ5.exe

@@ -1,0 +1,87 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+//const int N = 100000;
+//string s[N];
+string* s;
+int n;
+
+int merge(int p, int q) {
+	if (p >= q) return 0;
+	int mid = p + q >> 1;
+	int cnt = 0;
+	string* temp = new string[q - p + 1];
+	int i = p, j = mid + 1;
+	int k = 0;
+	while (i <= mid && j <= q) {
+		if (s[i] <= s[j])
+			temp[k++] = s[i++];
+		else {
+			cnt += mid - i + 1;
+			temp[k++] = s[j++];
+		}
+	}
+	while (i <= mid)
+		temp[k++] = s[i++];
+	while(j <= q)
+		temp[k++] = s[j++];
+	
+	for (int i = 0; i < k; i++)
+		s[p + i] = temp[i];
+	delete []temp;
+
+	return cnt;
+}
+
+int merge_sort(int p, int q) {
+	int res = 0;
+	if (p < q) {
+		int mid = p + q >> 1;
+		int l = merge_sort(p, mid);
+		int r = merge_sort(mid + 1, q);
+		res += merge(p, q) + l + r;
+	}
+	return res;
+}
+
+
+/*
+int INPLACE_COUNT(int l, int r) {
+	long num = 0;
+	if (r <= l) return num;
+	int mid = l + r >> 1;
+	num += INPLACE_COUNT(l, mid) + INPLACE_COUNT(mid + 1, r);
+	sort(s + l, s + mid);
+	sort(s + mid + 1, s + r);
+	int i = 1, j = mid + 1;
+	while (i <= mid) {
+		if (s[i] > s[j]) {
+			num += mid - i + 1;
+			j++;
+			if (j > r) break;
+		}
+		else
+			i++;
+	}
+	return num;
+}
+*/
+int main() {
+	cin >> n;
+	s = new string[n];
+	for (int i = 0; i < n; i++) cin >> s[i];
+
+	cout << "wo yi yue du guan yu chao xi de shuo ming" << endl;
+
+	cout << merge_sort(0, n - 1) << endl;
+
+	return 0;
+}
+
+/*
+4
+aaaaaaaaaa bbbbbbbbbb cccccccccc aaaaaaaaab
+*/

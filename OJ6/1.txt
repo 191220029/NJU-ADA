@@ -1,0 +1,89 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+struct edge {
+	int v;
+	int w;
+	edge(int _v, int _w) {
+		this->v = _v;
+		this->w = _w;
+	}
+};
+
+int n;
+const int INF = 0x7f7f7f7f;
+vector<vector<edge>> a;
+stack<int> logic_end;
+int* dist;
+bool* visited;
+
+void check_a() {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < a[i].size(); j++) {
+			cout << i << a[i][j].v << a[i][j].w << endl;
+		}
+	}
+	return;
+}
+
+void DFS(int u) {
+	visited[u] = true;
+	for (int i = 0; i < a[u].size(); i++) {
+		if (!visited[a[u][i].v])
+			DFS(a[u][i].v);
+	}
+	logic_end.push(u);
+	return;
+}
+
+int main() {
+	scanf("%d", &n);
+	a.resize(n);
+	dist = new int[n];
+	visited = new bool[n];
+	fill(dist, dist + n, -INF);
+	fill(visited, visited + n, false);
+	int x, y, w;
+	while (scanf("%d %d %d", &x, &y, &w) != EOF) {
+		if (x == -1) break;
+		a[x].push_back({ y, w });
+	}
+
+	DFS(0);
+	dist[0] = 0;
+
+	while (!logic_end.empty()) {
+		int u = logic_end.top();
+		logic_end.pop();
+		if (dist[u] != -INF) {
+			for (int i = 0; i < a[u].size(); i++) {
+				edge t = a[u][i];
+				dist[t.v] = max(dist[t.v], dist[u] + t.w);
+			}
+		}
+	}
+
+	printf("I have read the rules about plagiarism punishment\n");
+	//check_a();
+
+	for (int i = 1; i < n; i++)
+		printf("%d ", dist[i]);
+
+	return 0;
+}
+
+/*
+6
+0 1 1
+0 3 2
+1 2 6
+2 4 1
+2 5 2
+3 4 3
+3 1 4
+4 5 1
+-1 -1 -1
+*/
